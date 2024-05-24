@@ -1,18 +1,27 @@
 from behave import *
 from selenium import webdriver
-from features.commonUISteps import CommonUISteps
+
 from selenium.webdriver.common.by import By
 import time
-import os
 from datetime import datetime
 from selenium import webdriver
 
 from behave import given, when, then
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from features.commonUISteps import CommonUISteps
+
 import sys
 import logging
+import importlib.util
+import os
+
+# Path to the commonUISteps.py
+common_ui_steps_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../uiAutomation/commonUISteps.py'))
+
+# Load the module
+spec = importlib.util.spec_from_file_location("commonUISteps", common_ui_steps_path)
+commonUISteps = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(commonUISteps)
 
 # Setup logging configuration
 logging.basicConfig(level=logging.INFO)
@@ -34,7 +43,7 @@ def step_impl(context, url):
 @then('we send "{text}" to the alert')
 def step_impl(context, text):
     time.sleep(5)
-    CommonUISteps.send_alert_text(context, text)
+    commonUISteps.CommonUISteps.send_alert_text(context, text)
 
 @then('we print the alert text')
 def step_impl(context):
