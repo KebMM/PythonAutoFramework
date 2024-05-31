@@ -195,3 +195,84 @@ API automation in this framework uses requests and other libraries to interact w
 ### Testing API with PyTest
 - Follow the steps outlined in the TDD Testing with PyTest section.
 - Sample API tests using PyTest can be found in the 'tests/api/' directory, such as 'test_api.py'.
+
+## Mobile Automation
+Mobile automation in this framework uses Appium to interact with mobile applications. The 'mobileAutomation/' directory contains pre-built methods for common mobile operations in the 'commonMobileSteps.py' file. For mobile testing we recommend using python's built in testing module, 'unittest', and have provided an example of how to create a test using this module below. Mobile tests can also be written using other TDD or BDD testing frameworks, like Pytest or Behave.
+
+### Prerequisites for Mobile Testing
+Ensure you have the following installed and configured:
+- Appium server
+- Android SDK
+- Java JDK
+- Android Virtual Device (AVD) or a real device connected
+
+### Setting Up Appium
+1. Install Appium:
+   ```
+   npm install -g appium
+   ```
+2. Start Appium server:
+   ```
+   appium
+   ```
+
+### Testing Mobile with unittest
+Inside the 'tests/mobile' directory create a test file that either start with 'test_' or ends with '_test.py' . We have a sample test inside this directory called 'test_mobile.py'. Below you can see how we structured our sample mobile test:
+```
+import unittest
+import os
+import importlib.util
+from appium import webdriver
+from appium.options.android import UiAutomator2Options
+from appium.webdriver.common.appiumby import AppiumBy
+
+# Path to the commonMobileSteps.py
+common_mobile_steps_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../mobileAutomation/commonMobileSteps.py'))
+
+# Load the module
+spec = importlib.util.spec_from_file_location("commonMobileSteps", common_mobile_steps_path)
+commonMobileSteps = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(commonMobileSteps)
+
+class TestAppium(unittest.TestCase):
+    def setUp(self):
+        capabilities = {
+            "platformName": "Android",
+            "deviceName": "emulator-5554",
+            "platformVersion": "11.0",
+            "app": os.path.abspath(r'C:\k\All Search Engines_1.0_apkcombo.com.apk'),
+            "automationName": "UiAutomator2",
+            "ensureWebviewsHavePages": "true"
+        }
+
+        options = UiAutomator2Options()
+        options.load_capabilities(capabilities)
+
+        self.driver = webdriver.Remote('http://localhost:4723/wd/hub', options=options)
+        self.mobile_steps = commonMobileSteps.CommonMobileSteps(self.driver)
+
+    def tearDown(self):
+        if self.driver:
+            self.driver.quit()
+
+  def test_scroll_and_screenshot(self):
+            self.mobile_steps.wait_for_element(AppiumBy.ID, 'com.cglrstudios.svkttt:id/button7')
+            self.mobile_steps.click_element(AppiumBy.ID, 'com.cglrstudios.svkttt:id/button7')
+            # Wait for the input field and send text
+            self.mobile_steps.wait_for_element(AppiumBy.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.support.v4.widget.DrawerLayout/android.view.ViewGroup/android.widget.RelativeLayout/android.webkit.WebView/android.webkit.WebView/android.view.View[1]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.widget.EditText')
+
+            # Scroll to the element using description
+            self.mobile_steps.scroll_to_element(AppiumBy.ANDROID_UIAUTOMATOR, 'Download the DuckDuckGo App')
+
+            # Wait for the element after scrolling and take a screenshot
+            self.mobile_steps.wait_for_element(AppiumBy.XPATH, '//android.view.View[@content-desc="Download the DuckDuckGo App"]/android.widget.TextView')
+            self.mobile_steps.take_screenshot('screenshot.png')
+
+if __name__ == '__main__':
+    unittest.main()
+```
+To run the mobile test, use the following command:
+```
+python ...
+```
+
