@@ -176,7 +176,7 @@ pytest tests/api/test_api.py::test_get_element_text
 
 For additional information about PyTest please visit ...
 ## UI Automation
-UI automation in this framework uses Selenium WebDriver to interact with web pages. The 'uiAutomation/' directory contains pre-built methods for common UI operations in the 'commonUISteps.py' file.
+UI automation in this framework uses Selenium WebDriver to interact with web pages. The 'uiAutomation/' directory contains pre-built methods for common UI operations in the 'commonUISteps.py' file. You can edit and add to this file to create custom methods for further testing. UI can be tested in either BDD or TDD using any testing library you wish to. For our examples we have primarily used Behave for BDD and PyTest for TDD, as seen above. 
 
 ### Testing UI with Behave
 - Follow the steps outlined in the BDD Testing with Behave section.
@@ -187,7 +187,7 @@ UI automation in this framework uses Selenium WebDriver to interact with web pag
 - Sample UI tests using PyTest can be found in the 'tests/ui/' directory, such as 'test_ui.py'.
 
 ## API Automation
-API automation in this framework uses requests and other libraries to interact with APIs. The 'apiAutomation/' directory contains pre-built methods for common API operations in the 'commonAPISteps.py' file.
+API automation in this framework uses requests and other libraries to interact with APIs. The 'apiAutomation/' directory contains pre-built methods for common API operations in the 'commonAPISteps.py' file. ou can edit and add to this file to create custom methods for further testing. API can be tested in either BDD or TDD using any testing library you wish to.
 
 ### Testing API with Behave
 - Follow the steps outlined in the BDD Testing with Behave section.
