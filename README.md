@@ -273,6 +273,64 @@ if __name__ == '__main__':
 ```
 To run the mobile test, use the following command:
 ```
-python ...
+python nameOfTest
 ```
 
+## Using the Reporting Tool
+For this framework we use Allure as a reporting tool...
+
+### Allure in PyTest
+
+1. Import allure:
+```
+import allure
+```
+2. Use Allure annotations to add metadata to your tests:
+```
+@allure.feature('Feature Name')
+@allure.story('Story Name')
+def test_example():
+    pass
+```
+3. Execute the tests and generate Allure results:
+```
+pytest --alluredir=allure-results
+```
+4. Use the Allure command-line tool to open a web server and display the test results in your browser
+```
+allure serve allure-results
+```
+Here is an example pytest that uses allure:
+```
+import pytest
+import allure
+import os
+import importlib.util
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+# Path to the commonUISteps.py
+common_ui_steps_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../uiAutomation/commonUISteps.py'))
+
+# Load the module
+spec = importlib.util.spec_from_file_location("commonUISteps", common_ui_steps_path)
+commonUISteps = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(commonUISteps)
+
+@pytest.fixture(scope="module")
+def driver():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+@allure.feature('UI Tests')
+@allure.story('Get Element Text')
+def test_get_element_text(driver):
+    commonUISteps.CommonUISteps.launch_web_browser(driver, "http://example.com")
+
+    with allure.step("Get text of the element"):
+        text = commonUISteps.CommonUISteps.get_elements_text(driver, (By.XPATH, "/html/body/div/h1"))
+        assert text[0] == "Example Domain"
+```
+When the 'allure serve allure-results' command is run, you will be able to view detailed information about each test, including steps, attachments, and failures. <br />
+For further information on Allure reporting please visit...
