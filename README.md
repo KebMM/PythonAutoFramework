@@ -1,9 +1,11 @@
 # Python Automation Framework
 
 ## Overview
-This framework is designed to simplify automated testing for various domains including UI, API, Database, and Mobile. It supports both BDD (Behavior-Driven Development) and TDD (Test-Driven Development) approaches, making it versatile and user-friendly. With pre-built components and comprehensive training materials, users can quickly start writing and running tests with minimal setup.
+This framework is designed to simplify automated testing for various domains including UI, API, Database, and Mobile. It supports both BDD (Behavior-Driven Development) and TDD (Test-Driven Development) approaches, making it versatile and user-friendly. With pre-built components and comprehensive training materials, users can quickly start writing and running tests with minimal setup. 
+### Pros of this framework, hows it different etc
 
-## Features
+### Features
+This can be table of contents instead? List of features can be put in overview or framework structure
 - Python-based BDD and TDD frameworks
 - UI Automation Capability
 - API Automation Capability
@@ -63,7 +65,7 @@ PythonAutoFramework/<br />
 ├── requirements.txt<br />
 └── README.md<br />
 
-## BDD Testing with Behave:
+## BDD with Behave:
 1. Ensure Behave is installed (This should have been installed when installing dependencies)
 ```
 pip install behave
@@ -126,7 +128,7 @@ behave
 ```
 
 For additional information about Behave please visit ...
-## TDD Testing with PyTest:
+## TDD with PyTest:
 1. Ensure PyTest is installed (This should have been installed when installing dependencies)
 ```
 pip install pytest
@@ -277,30 +279,42 @@ python nameOfTest
 ```
 
 ## Using the Reporting Tool
-For this framework we use Allure as a reporting tool...
+For this framework we use Allure as a reporting tool. Allure is a flexible, lightweight reporting tool that shows a concise representation of what has been tested in a web report form. It helps in tracking the history of your tests, finding and fixing bugs, and improving the quality of your product.
 
-### Allure in PyTest
+### Installing Allure on Windows
+To install Allure on Windows, you can use Scoop, by running the following command:
+```
+scoop install allure
+```
+For further installation instructions, like how to install on different operating systems or to install Scoop, please refer to the Allure installation documentation: https://allurereport.org/docs/install/
 
-1. Import allure:
+### Allure in PyTest and unittest
+
+1. Install the Allure Pytest adapter (This plugin supports both Pytest and unittest):
+   ```
+   pip install allure-pytest
+   ```
+2.  Import allure into your test file:
 ```
 import allure
 ```
-2. Use Allure annotations to add metadata to your tests:
+3. You have the option to use Allure annotations to add metadata to your tests. For example:
 ```
 @allure.feature('Feature Name')
 @allure.story('Story Name')
 def test_example():
     pass
 ```
-3. Execute the tests and generate Allure results:
+4. Execute the tests and generate Allure results <br/>
+     &nbsp;The following commannd exectues the test as normal and then creates a directory "allure-results" that stores the results of each test ran:
 ```
 pytest --alluredir=allure-results
 ```
-4. Use the Allure command-line tool to open a web server and display the test results in your browser
+5. Use the Allure command-line tool to open a web server and display the test results in your browser:
 ```
 allure serve allure-results
 ```
-Here is an example pytest that uses allure:
+Below is an example pytest that uses allure. A unittest would also implement Allure this way, but instead importing "unittest" instead of "pytest":
 ```
 import pytest
 import allure
@@ -333,4 +347,93 @@ def test_get_element_text(driver):
         assert text[0] == "Example Domain"
 ```
 When the 'allure serve allure-results' command is run, you will be able to view detailed information about each test, including steps, attachments, and failures. <br />
-For further information on Allure reporting please visit...
+For further information on Allure reporting please visit https://allurereport.org/docs/pytest/
+
+
+### Allure in Behave
+1. Install the Allure Behave adapter:
+   ```
+   pip install allure-behave
+   ```
+2. Configure Behave to use Allure: <br/>
+   The framework should have already configured behave to use Allure. But in case it hasn't, this can be done by creating a behave.ini file in the framework root directory (if it doesn't exist) and adding the following content:
+    ```
+    [behave]
+    plugins = allure_behave
+    ```
+3. You can use Allure decorators to annotate your steps in the step definition file. This allows you to add additional information to your reports, such as steps, features, and scenarios. For example:
+      ```
+   @allure.feature('API Testing')
+   @allure.story('Check API Availability')
+   @given('the API is available')
+   def step_impl(context):
+       pass
+      ```
+4. Execute the Behave tests and generate Allure results:
+   ```
+   behave -f allure_behave.formatter:AllureFormatter -o allure-results
+   ```
+5.  Use the Allure command-line tool to open a web server and display the test results in your browser::
+     ```
+      allure serve allure-results
+     ```
+
+Here is an example behave test that uses Allure <br/>
+step deinition file: <br/>
+```
+import json
+from behave import given, when, then
+import importlib
+import os
+import allure
+
+# Path to the commonAPISteps.py
+common_api_steps_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../apiAutomation/commonAPISteps.py'))
+
+# Load the module
+spec = importlib.util.spec_from_file_location("commonAPISteps", common_api_steps_path)
+commonAPISteps = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(commonAPISteps)
+
+response = None
+
+@allure.feature('API Testing')
+@allure.story('Check API Availability')
+@given('the API is available')
+def step_impl(context):
+    pass
+
+@allure.step('Send GET request to {url}')
+@when('we send a GET request to "{url}"')
+def step_impl(context, url):
+    global response
+    response = commonAPISteps.CommonApiSteps.send_get_request(url)
+
+@allure.step('Verify status code is {status_code}')
+@then('the status code should be {status_code:d}')
+def step_impl(context, status_code):
+    commonAPISteps.CommonApiSteps.check_status_code(response, status_code)
+
+@then('the response JSON should be')
+def step_impl(context):
+    expected_json = json.loads(context.text)
+    commonAPISteps.CommonApiSteps.check_response_json(response, expected_json)
+```
+Feature file: <br/>
+```
+Feature: API Testing
+
+  Scenario: Test GET Request
+    Given the API is available
+    When we send a GET request to "https://jsonplaceholder.typicode.com/posts/1"
+    Then the status code should be 200
+    And the response JSON should be
+      """
+      {
+        "userId": 1,
+        "id": 1,
+        "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+        "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+      }
+      """
+```
