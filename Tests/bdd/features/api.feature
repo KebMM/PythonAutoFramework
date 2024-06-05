@@ -1,6 +1,6 @@
 Feature: API Testing
 
-  Scenario: Test GET Request
+  Scenario: Allure w behave
     Given the API is available
     When we send a GET request to "https://jsonplaceholder.typicode.com/posts/1"
     Then the status code should be 200

@@ -38,6 +38,10 @@ logger.addHandler(handler)
 
 class CommonUISteps:
     @staticmethod
+    def launch_web_browser(driver, url):
+        driver.get(url)
+
+    @staticmethod
     def click(element):
         element.click()
 
@@ -398,26 +402,3 @@ class CommonUISteps:
     # Implement other methods similarly
 
 # Define other common steps here
-
-# Define custom step decorators
-def given(*args, **kwargs):
-    return Given(*args, **kwargs)
-
-def when(*args, **kwargs):
-    return When(*args, **kwargs)
-
-def then(*args, **kwargs):
-    return Then(*args, **kwargs)
-
-# Define step implementations using custom decorators
-@given('we have behave installed')
-def step_impl(context):
-    pass
-
-@when('we implement a test')
-def step_impl(context):
-    assert True is not False
-
-@then('behave will test it for us!')
-def step_impl(context):
-    assert context.failed is False

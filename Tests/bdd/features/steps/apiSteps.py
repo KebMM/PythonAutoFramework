@@ -2,10 +2,10 @@ import json
 from behave import given, when, then
 import importlib
 import os
-
+import allure
 
 # Path to the commonAPISteps.py
-common_api_steps_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../apiAutomation/commonAPISteps.py'))
+common_api_steps_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../apiAutomation/commonAPISteps.py'))
 
 # Load the module
 spec = importlib.util.spec_from_file_location("commonAPISteps", common_api_steps_path)
@@ -14,15 +14,19 @@ spec.loader.exec_module(commonAPISteps)
 
 response = None
 
+@allure.feature('API Testing')
+@allure.story('Check API Availability')
 @given('the API is available')
 def step_impl(context):
     pass
 
+@allure.step('Send GET request to {url}')
 @when('we send a GET request to "{url}"')
 def step_impl(context, url):
     global response
     response = commonAPISteps.CommonApiSteps.send_get_request(url)
 
+@allure.step('Verify status code is {status_code}')
 @then('the status code should be {status_code:d}')
 def step_impl(context, status_code):
     commonAPISteps.CommonApiSteps.check_status_code(response, status_code)
