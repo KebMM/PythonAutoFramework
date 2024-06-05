@@ -379,7 +379,7 @@ For further information on Allure reporting please visit https://allurereport.or
      ```
 
 Here is an example behave test that uses Allure <br/>
-step deinition file: <br/>
+step definition file: <br/>
 ```
 import json
 from behave import given, when, then
