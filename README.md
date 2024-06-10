@@ -9,7 +9,6 @@ This can be table of contents instead? List of features can be put in overview o
 - Python-based BDD and TDD frameworks
 - UI Automation Capability
 - API Automation Capability
-- Database Automation Capability
 - Mobile Automation Capability
 - Sufficient Reporting Tool
 - Training Materials
@@ -44,26 +43,31 @@ PythonAutoFramework/<br />
 │ ├── init.py<br />
 │ └── commonAPISteps.py<br />
 │<br />
+├── mobileAutomation/<br />
+│ ├── init.py<br />
+│ └── commonMobileSteps.py<br />
+│<br />
 ├── uiAutomation/<br />
 │ ├── init.py<br />
 │ └── commonUISteps.py<br />
 │<br />
 ├── tests/<br />
 │ ├── init.py<br />
-│ ├── api/<br />
-│ │ ├── init.py<br />
-│ │ └── test_api.py<br />
-│ └── ui/<br />
-│ ├── init.py<br />
-│ └── test_ui.py<br />
-│<br />
-├── features/<br />
-│ ├── steps/<br />
-│ │ └── apiSteps.py<br />
-│ └── tutorial.feature<br />
+│ ├── bdd/ <br />
+│ │ ├── features/<br />
+│ │ │ ├── allure-results/<br />
+│ │ │ └── steps/ <br />
+│ │ │ │ ├── sampleTest.py <br />
+│ │ │ └── sample.feature <br />
+│ <br />
+│ └── tdd/<br />
+│ │ ├── allure-results/<br />
+│ │ └── test_sample.py<br />
 │<br />
 ├── requirements.txt<br />
+└── docs.md<br />
 └── README.md<br />
+
 
 ## BDD with Behave:
 1. Ensure Behave is installed (This should have been installed when installing dependencies)
@@ -127,7 +131,7 @@ def step_impl(context):
 behave
 ```
 
-For additional information about Behave please visit ...
+For additional information about Behave please visit https://behave.readthedocs.io/en/stable/tutorial.html
 ## TDD with PyTest:
 1. Ensure PyTest is installed (This should have been installed when installing dependencies)
 ```
@@ -176,7 +180,7 @@ pytest tests/ui/test_ui.py
 pytest tests/api/test_api.py::test_get_element_text
 ```
 
-For additional information about PyTest please visit ...
+For additional information about PyTest please visit https://docs.pytest.org/en/8.2.x/
 ## UI Automation
 UI automation in this framework uses Selenium WebDriver to interact with web pages. The 'uiAutomation/' directory contains pre-built methods for common UI operations in the 'commonUISteps.py' file. You can edit and add to this file to create custom methods for further testing. UI can be tested in either BDD or TDD using any testing library you wish to. For our examples we have primarily used Behave for BDD and PyTest for TDD, as seen above. 
 
@@ -437,3 +441,4 @@ Feature: API Testing
       }
       """
 ```
+For further information on Allure reporting please visit https://allurereport.org/docs/behave/
