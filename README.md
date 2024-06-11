@@ -320,12 +320,15 @@ def test_example():
 pytest --alluredir=allure-results
 ```
 Here is an example of a pytest being run using the command above:
+![Test Demo](SampleUITest.gif)
+<br/>
 5. Use the Allure command-line tool to open a web server and display the test results in your browser:
 ```
 allure serve allure-results
 ```
 Here is an example of the Allure web server being opened:
-Below is an example pytest that uses allure. A unittest would also implement Allure this way, but instead importing "unittest" instead of "pytest":
+![Allure Demo](SampleUIAllureReport.gif)
+Below is an example pytest file that uses allure. A unittest would also implement Allure this way, but instead importing "unittest" instead of "pytest":
 ```
 import pytest
 import allure
