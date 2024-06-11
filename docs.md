@@ -13,14 +13,14 @@ This command uses ActionChains to perform a click on the specified element, whic
 This command performs a double-click action on the specified element. The element can be identified using web locator
 
 **Click with Timeout (click_with_timeout):** <br/>
-Waits for an element to become visible within a specified timeout period before clicking on it. The time (in seconds) should be specified as a parameter when calling the method. For example: 
+Waits for an element to become visible within a specified timeout period before clicking on it. The time (in seconds) should be specified as a parameter when calling the method. For example:
 ```CommonUISteps.click_with_timeout(driver, element, 10)```
 
 **Right Click with Actions (right_click_with_actions):** <br/>
 Performs a right-click action on the specified element
 
 **Click Coordinates (click_coordinates):** <br/>
-Clicks on the screen at the specified (x, y) coordinates. These coordinates are passed in as parameters when calling the method. For example: 
+Clicks on the screen at the specified (x, y) coordinates. These coordinates are passed in as parameters when calling the method. For example:
 ```CommonUISteps.click_coordinates(867, 847)```
 
 **Click and Hold (click_and_hold):** <br/>
@@ -36,10 +36,10 @@ Sends the specified text to the element. Both the element and the text are passe
 This command retrieves the text from all elements matching the specified locator and logs the text.
 
 **Verify Element Displayed (verify_element_displayed):** <br/>
-This step passes if the specified element is visible on the screen. The timeout period can be adjusted by editing the component code in "commonUISteps.py". The number set in the line ``` element = WebDriverWait(context.driver, 10).until ``` can be changed to your desired timeout period. The method can be called in a test as so: ```CommonUISteps.verify_element_displayed(context, (By.XPATH, "//div[text()='Reject all']"))```
+This step passes if the specified element is visible on the screen. The timeout period can be adjusted by editing the timeout parameter to your desired timeout period. The method can be called in a test as so: ```CommonUISteps.verify_element_displayed(context, (By.XPATH, "element's xpath"), timeout=timeout value)```
 
 **Verify Element Not Displayed (verify_element_not_displayed):** <br/>
-This step passes if the specified element is not displayed within a specified timeout period. The timeout period can be adjusted by editing the component code in "commonUISteps.py". The number set in the line ``` WebDriverWait(context.driver, 5).until ``` can be changed to your desired timeout period. The method can be called in a test as so: ```CommonUISteps.verify_element_not_displayed(context, (By.XPATH, "//div[text()='Reject all']"))```
+This step passes if the specified element is not displayed within a specified timeout period. The timeout period can be adjusted by editing the timeout parameter to your desired timeout period. The method can be called in a test as so: ```CommonUISteps.verify_element_not_displayed(context, (By.XPATH, "element's xpath"), timeout=timout value)```
 
 **Move Mouse to Coordinates (move_mouse_to_coordinates):** <br/>
 Moves mouse to specified coordinates (x,y). ```CommonUISteps.move_mouse_to_coordinates(867, 847)```
@@ -72,7 +72,7 @@ This component highlights an element by changing its style temporarily, useful f
 This component selects or deselects a checkbox element based on the specified boolean value. Called by running ```CommonUISteps.select_checkbox(checkbox, True)```
 
 **Select Dropdown by Text (select_dropdown_by_text):** <br/>
-This component opens a dropdown and selects the option based on the text. The dropdown is found using an identifier. 
+This component opens a dropdown and selects the option based on the text. The dropdown is found using an identifier.
 
 **Accept Alert (accept_alert):** <br/>
 This component accepts a browser alert if present. ```CommonUISteps.accept_alert(context.driver.switch_to.alert)```
@@ -126,7 +126,8 @@ This component reads an image file from the specified path and returns it as a B
 This component compares two images by pixels to determine if they are similar within a specified tolerance (%). If the simalarity is above the tolerance threshold it is regarded as similar. The threshold is set in the parameters of the "images_similar" method located in "commonUISteps.py", and can be changed by editing the value (set by default to 3%). The image paths are passed in when calling the method, for example: ```CommonUISteps.are_images_similar(actual_image_path, expected_image_path)```
 
 **Click on Image (click_on_image):** <br/>
-This component locates an image from the user's filesystem and clicks on an image on the screen. 
+This component locates an image from the user's filesystem and clicks on an image on the screen. It has a timeout parameter set to 5 (seconds) by default but can be set to a different value.
+
 
 ## API Custom Component Descriptions
 **Send GET Request (send_get_request):** <br/>
@@ -232,5 +233,3 @@ Example usage: ```CommonMobileSteps.take_screenshot(file_name)```
 **Scroll to Element (scroll_to_element):** <br/>
 This component scrolls to an element located by a specified locator strategy, but does not support XPath locators. It supports resource-id, text, or description locators for Android.
 Example usage: ```CommonMobileSteps.scroll_to_element(AppiumBy.ANDROID_UIAUTOMATOR, locator)```
-
-

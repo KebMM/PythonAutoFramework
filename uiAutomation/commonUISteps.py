@@ -97,9 +97,9 @@ class CommonUISteps:
         return elem_texts
 
     @staticmethod
-    def verify_element_displayed(context, locator):
+    def verify_element_displayed(context, locator, timeout=10):
         try:
-            element = WebDriverWait(context.driver, 10).until(
+            element = WebDriverWait(context.driver, timeout).until(
                 EC.visibility_of_element_located(locator)
             )
             assert element.is_displayed(), f"Element is not displayed: {locator}"
@@ -111,14 +111,15 @@ class CommonUISteps:
             assert False, f"Element is not displayed: {locator}"
 
     @staticmethod
-    def verify_element_not_displayed(context, locator):
+    def verify_element_not_displayed(context, locator, timeout=5):
         try:
-            WebDriverWait(context.driver, 5).until(
+            WebDriverWait(context.driver, timeout).until(
                 EC.invisibility_of_element_located(locator)
             )
             print(f"Element is not displayed: {locator}")
         except TimeoutException:
             assert False, f"Element is still displayed: {locator}"
+
 
     @staticmethod
     def scroll_to_element(context, element):
@@ -373,13 +374,11 @@ class CommonUISteps:
         return percentage_diff <= tolerance
 
     @staticmethod
-    def click_on_image(image_name):
+    def click_on_image(image_name, timeout=5):
         user_dir = os.getcwd()
         image_address = os.path.join(user_dir, "src", "test", "resources", "projectResources", "uiResources", "uiImages", f"{image_name}.png")
 
         try:
-            # Wait up to 5 seconds for the image to appear on the screen
-            timeout = 5
             start_time = time.time()
             while True:
                 try:
@@ -399,5 +398,3 @@ class CommonUISteps:
 
 
     # Implement other methods similarly
-
-# Define other common steps here
