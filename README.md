@@ -1,8 +1,10 @@
 # Python Automation Framework
 
 ## Overview
-This framework is designed to simplify automated testing for various domains including UI, API, Database, and Mobile. It supports both BDD (Behavior-Driven Development) and TDD (Test-Driven Development) approaches, making it versatile and user-friendly. With pre-built components and comprehensive training materials, users can quickly start writing and running tests with minimal setup. 
-### Pros of this framework, hows it different etc
+This framework is designed to simplify automated end-to-end testing for various domains including UI, API, and Mobile. It supports both BDD (Behavior-Driven Development) and TDD (Test-Driven Development) approaches, making it versatile for a range of testing methodologies, and user-friendly. With pre-built components and comprehensive training materials, users can quickly start writing and running tests with minimal setup. These pre-built components simplify repetitive tasks and improve the readability of tests. For example: 
+- **get_elements_text(driver, locator):** This component simplifies the process of retrieving text from a web-page, by only requiring the webdriver and the element locator. This is a commonly used step in UI tests, so by developing this reusable component tests are made to be more maintainable. 
+<br>
+This repository serves as the clean template you can use to build your testing projects. For a sample framework with sample tests to guide you, please visit "Sample Framework Repository", or follow the instructions below.
 
 ### Features
 This can be table of contents instead? List of features can be put in overview or framework structure
@@ -29,38 +31,41 @@ pip install -r requirements.txt
 ```
 
 ## Framework Structure
-File structure will go here e.g
-- features/: Contains feature files for BDD tests.
-- apiAutomation/
-- steps/: Contains step definitions for BDD tests.
-- tests/: Contains TDD test cases.
-- commonUISteps.py: Pre-built UI automation methods.
-- reports/: Directory for test reports.<br />
 
-PythonAutoFramework/<br />
+- **apiAutomation/:** Inside this directory the ***commonAPISteps.py*** file can be found. This where the Pre-built API automation methods can be found and edited as needed.
+- **uiAutomation/:** Inside this directory the ***commonUISteps.py*** file can be found. This where the Pre-built UI automation methods can be found and edited as needed.
+- **mobileAutomation/:** Inside this directory the ***commonMobileSteps.py*** file can be found. This where the Pre-built mobile automation methods can be found and edited as needed.
+- **bdd/features/:** Contains feature files for BDD tests.
+- **bdd/features/steps/:** Contains step definitions for BDD tests.
+- **tdd/:** Contains TDD test cases.
+- **docs:** Contains a description for each custom pre-built component.
+- **requirements.txt:** Contains ...<br />
+
+
+**PythonAutoFramework/** <br />
 │<br />
-├── apiAutomation/<br />
+├── **apiAutomation/** <br />
 │ ├── init.py<br />
 │ └── commonAPISteps.py<br />
 │<br />
-├── mobileAutomation/<br />
+├── **mobileAutomation/** <br />
 │ ├── init.py<br />
 │ └── commonMobileSteps.py<br />
 │<br />
-├── uiAutomation/<br />
+├── **uiAutomation/** <br />
 │ ├── init.py<br />
 │ └── commonUISteps.py<br />
 │<br />
-├── tests/<br />
+├── **tests/** <br />
 │ ├── init.py<br />
-│ ├── bdd/ <br />
-│ │ ├── features/<br />
+│ ├── **bdd/** <br />
+│ │ ├── **features/** <br />
 │ │ │ ├── allure-results/<br />
-│ │ │ └── steps/ <br />
+│ │ │ └── **steps/** <br />
 │ │ │ │ ├── sampleTest.py <br />
 │ │ │ └── sample.feature <br />
 │ <br />
-│ └── tdd/<br />
+│ └── **tdd/** <br />
 │ │ ├── allure-results/<br />
 │ │ └── test_sample.py<br />
 │<br />
@@ -314,10 +319,12 @@ def test_example():
 ```
 pytest --alluredir=allure-results
 ```
+Here is an example of a pytest being run using the command above:
 5. Use the Allure command-line tool to open a web server and display the test results in your browser:
 ```
 allure serve allure-results
 ```
+Here is an example of the Allure web server being opened:
 Below is an example pytest that uses allure. A unittest would also implement Allure this way, but instead importing "unittest" instead of "pytest":
 ```
 import pytest
@@ -344,11 +351,15 @@ def driver():
 @allure.feature('UI Tests')
 @allure.story('Get Element Text')
 def test_get_element_text(driver):
-    commonUISteps.CommonUISteps.launch_web_browser(driver, "http://example.com")
+    with allure.step("Launch browser and navigate to Infuse.it"):
+        commonUISteps.CommonUISteps.launch_web_browser(driver, "https://infuse.it/")
 
+    with allure.step("Go to 'Explore Solutions' page"):
+        element = commonUISteps.CommonUISteps.wait_for_clickability(driver, (By.XPATH, "//*[text()='EXPLORE Solutions']"), timeout=10)
+        commonUISteps.CommonUISteps.click(element)
     with allure.step("Get text of the element"):
-        text = commonUISteps.CommonUISteps.get_elements_text(driver, (By.XPATH, "/html/body/div/h1"))
-        assert text[0] == "Example Domain"
+        text = commonUISteps.CommonUISteps.get_elements_text(driver, (By.XPATH, "//*[text()='book a cONSULTATION']"))
+        assert text[0] == "BOOK A CONSULTATION"
 ```
 When the 'allure serve allure-results' command is run, you will be able to view detailed information about each test, including steps, attachments, and failures. <br />
 For further information on Allure reporting please visit https://allurereport.org/docs/pytest/
