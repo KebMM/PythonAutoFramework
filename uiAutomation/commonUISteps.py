@@ -82,7 +82,6 @@ class CommonUISteps:
 
     @staticmethod
     def send_text(element, text):
-        element.clear()
         element.send_keys(text)
 
     @staticmethod

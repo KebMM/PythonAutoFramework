@@ -24,8 +24,12 @@ def driver():
 @allure.feature('UI Tests')
 @allure.story('Get Element Text')
 def test_get_element_text(driver):
-    commonUISteps.CommonUISteps.launch_web_browser(driver, "http://example.com")
+    with allure.step("Launch browser and navigate to Infuse.it"):
+        commonUISteps.CommonUISteps.launch_web_browser(driver, "https://infuse.it/")
 
+    with allure.step("Go to 'Explore Solutions' page"):
+        element = commonUISteps.CommonUISteps.wait_for_clickability(driver, (By.XPATH, "//*[text()='EXPLORE Solutions']"), timeout=10)
+        commonUISteps.CommonUISteps.click(element)
     with allure.step("Get text of the element"):
-        text = commonUISteps.CommonUISteps.get_elements_text(driver, (By.XPATH, "/html/body/div/h1"))
-        assert text[0] == "Example Domain"
+        text = commonUISteps.CommonUISteps.get_elements_text(driver, (By.XPATH, "//*[text()='book a cONSULTATION']"))
+        assert text[0] == "BOOK A CONSULTATION"
