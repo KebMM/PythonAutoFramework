@@ -1,6 +1,5 @@
 import unittest
 import os
-import sys
 import importlib.util
 from appium import webdriver
 from appium.options.android import UiAutomator2Options

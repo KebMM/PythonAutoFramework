@@ -1,21 +1,14 @@
 from behave import *
-from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import pyautogui
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
-from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import UnexpectedTagNameException
 from selenium.common.exceptions import NoAlertPresentException
 from selenium.common.exceptions import NoSuchFrameException
 from selenium.common.exceptions import NoSuchWindowException
 import os
-from selenium.webdriver import Chrome
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
 from datetime import datetime
 import base64
 import time
