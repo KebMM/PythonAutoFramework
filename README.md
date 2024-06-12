@@ -1,5 +1,16 @@
 # Python Automation Framework
 
+## Table of Contents
+- [Overview](#overview)
+- [Prerequisites](#prerequisites)
+- [Framework Structure](#framework-structure)
+- [BDD with Behave](#bdd-with-behave)
+- [TDD with PyTest](#tdd-with-pytest)
+- [UI Automation](#ui-automation)
+- [API Automation](#api-automation)
+- [Mobile Automation](mobile-automation)
+- [Using the Reporting Tool](#using-the-reporting-tool)
+
 ## Overview
 This framework is designed to simplify automated end-to-end testing for various domains including UI, API, and Mobile. It supports both BDD (Behavior-Driven Development) and TDD (Test-Driven Development) approaches, making it versatile for a range of testing methodologies, and user-friendly. With pre-built components and comprehensive training materials, users can quickly start writing and running tests with minimal setup. These pre-built components simplify repetitive tasks and improve the readability of tests. For example: 
 - **get_elements_text(driver, locator):** This component simplifies the process of retrieving text from a web-page, by only requiring the webdriver and the element locator. This is a commonly used step in UI tests, so by developing this reusable component tests are made to be more maintainable.
