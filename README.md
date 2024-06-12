@@ -1,5 +1,5 @@
 # Python Automation Framework
-
+Welcome to the Python Testing Framework! This guide is designed to help you get started with setting up and using Python for API, Mobile and UI automated test cases.
 ## Table of Contents
 - [Overview](#overview)
 - [Prerequisites](#prerequisites)
@@ -30,8 +30,8 @@ This repository serves as the clean template you can use to build your testing p
 Ensure you have the following installed on your system:
 
 Python 3.7+
-pip (Python package installer)
-Google Chrome (for UI tests)
+- pip (Python package installer)
+- Google Chrome (for UI tests)
 
 ## Getting Started 
 Once the repository has been cloned, cd into the path of the repository and install the necessary dependencies:
@@ -41,9 +41,9 @@ pip install -r requirements.txt
 
 ## Framework Structure
 
-- **apiAutomation/:** Inside this directory the ***commonAPISteps.py*** file can be found. This where the Pre-built API automation methods can be found and edited as needed.
-- **uiAutomation/:** Inside this directory the ***commonUISteps.py*** file can be found. This where the Pre-built UI automation methods can be found and edited as needed.
-- **mobileAutomation/:** Inside this directory the ***commonMobileSteps.py*** file can be found. This where the Pre-built mobile automation methods can be found and edited as needed.
+- **apiAutomation/:** Inside this directory the ***commonAPISteps.py*** file can be found. This where the pre-built API automation methods can be found and edited as needed.
+- **uiAutomation/:** Inside this directory the ***commonUISteps.py*** file can be found. This where the pre-built UI automation methods can be found and edited as needed.
+- **mobileAutomation/:** Inside this directory the ***commonMobileSteps.py*** file can be found. This where the pre-built mobile automation methods can be found and edited as needed.
 - **bdd/features/:** Contains feature files for BDD tests.
 - **bdd/features/steps/:** Contains step definitions for BDD tests.
 - **tdd/:** Contains TDD test cases.
@@ -82,7 +82,17 @@ pip install -r requirements.txt
 └── docs.md<br />
 └── README.md<br />
 
+## Training Materials
+To aid the use of this Python testing framework, we have included comprehensive training materials. These materials are located in the ```docs.txt``` file and cover API, Mobile and UI testing. They provide detailed guidance on using the custom Python commands, structuring tests, and best practices. <br/>
+Additionally we have a separate repository containing sample tests, for examples on how to use components.
+<br/>
 
+**Documentation**
+- **Custom Commands Documentation:** Brief descriptions of custom Python commands are available in the docs.txt file. These documents explain the purpose, parameters, and usage examples of commands
+- **Sample Implementations:** We have included sample tests that provide examples of how tests can be created and how they implement the custom components. These examples will help users understand how to effectively use and combine these commands in their own tests. Sample tests can be located in either ```tests/tdd``` directory, or ```tests/bdd``` directory.
+    - **UI Testing:** Sample UI tests show how to interact with web elements, handle wait times, and validate UI components.
+    - **API Testing:** Sample API tests demonstrate sending HTTP requests, validating responses, and handling authentication.
+    - **Mobile Testing:** Sample mobile tests illustrate how to interact with mobile elements and perform mobile-specific actions.
 ## BDD with Behave:
 1. Ensure Behave is installed (This should have been installed when installing dependencies)
 ```
