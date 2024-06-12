@@ -2,20 +2,18 @@
 
 ## Overview
 This framework is designed to simplify automated end-to-end testing for various domains including UI, API, and Mobile. It supports both BDD (Behavior-Driven Development) and TDD (Test-Driven Development) approaches, making it versatile for a range of testing methodologies, and user-friendly. With pre-built components and comprehensive training materials, users can quickly start writing and running tests with minimal setup. These pre-built components simplify repetitive tasks and improve the readability of tests. For example: 
-- **get_elements_text(driver, locator):** This component simplifies the process of retrieving text from a web-page, by only requiring the webdriver and the element locator. This is a commonly used step in UI tests, so by developing this reusable component tests are made to be more maintainable. 
-<br>
+- **get_elements_text(driver, locator):** This component simplifies the process of retrieving text from a web-page, by only requiring the webdriver and the element locator. This is a commonly used step in UI tests, so by developing this reusable component tests are made to be more maintainable.
+  
 This repository serves as the clean template you can use to build your testing projects. For a sample framework with sample tests to guide you, please visit "Sample Framework Repository", or follow the instructions below.
 
-### Features
-This can be table of contents instead? List of features can be put in overview or framework structure
-- Python-based BDD and TDD frameworks
-- UI Automation Capability
-- API Automation Capability
-- Mobile Automation Capability
-- Sufficient Reporting Tool
-- Training Materials
+**Features of this framework include:**
+- Python-based BDD and TDD Capability
+- Pre-built UI Automation Components
+- Pre-built API Automation Components
+- Pre-built Mobile Automation Components
+- Reporting Tool
 - Sample Implementations
-- Getting Started
+
   
 ## Prerequisites
 Ensure you have the following installed on your system:
