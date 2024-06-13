@@ -4,6 +4,7 @@ Welcome to the Python Testing Framework! This guide is designed to help you get 
 - [Overview](#overview)
 - [Prerequisites](#prerequisites)
 - [Framework Structure](#framework-structure)
+- [Training Materials](#training-materials)
 - [BDD with Behave](#bdd-with-behave)
 - [TDD with PyTest](#tdd-with-pytest)
 - [UI Automation](#ui-automation)
@@ -12,9 +13,18 @@ Welcome to the Python Testing Framework! This guide is designed to help you get 
 - [Using the Reporting Tool](#using-the-reporting-tool)
 
 ## Overview
-This framework is designed to simplify automated end-to-end testing for various domains including UI, API, and Mobile. It supports both BDD (Behavior-Driven Development) and TDD (Test-Driven Development) approaches, making it versatile for a range of testing methodologies, and user-friendly. With pre-built components and comprehensive training materials, users can quickly start writing and running tests with minimal setup. These pre-built components simplify repetitive tasks and improve the readability of tests. For example: 
+This framework is designed to simplify automated end-to-end testing for various domains including UI, API, and Mobile. It is designed to be user-friendly and flexible, so it supports both BDD (Behavior-Driven Development) and TDD (Test-Driven Development) approaches, making it versatile for a range of testing methodologies. 
+
+**Key Benefits**
+- **User-Friendly and Flexible:** Designed to be easily customisable to suit various testing needs.
+- **Versatile Testing Approaches:** Supports both BDD and TDD methodologies.
+- **Enhanced Integration:** Compatible with reporting tools like Allure for detailed test reports.
+- **Powerful Custom Components:** Simplifies repetitive tasks and improves test readability.
+
+Each user has different test goals, so the flexibility of components, like the ability to easily customise timeout values, or the ability to integrate the tests with reporting tools like Allure, gives you full control of each test case. While the core functionality of tools like Selenium, Requests, and Appium remains intact, our framework adds several powerful features that differentiate it from a typical setup. One of the standout features is the extensive set of custom components we have developed. These components, coupled with comprehensive training materials, enable users to quickly start writing and running tests with minimal setup. For example: 
 - **get_elements_text(driver, locator):** This component simplifies the process of retrieving text from a web-page, by only requiring the webdriver and the element locator. This is a commonly used step in UI tests, so by developing this reusable component tests are made to be more maintainable.
-  
+- **wait_for_visibility(driver, locator, timeout):** Waits for an element to be visible within a specified timeout, abstracting common wait logic into a reusable function.
+
 This repository serves as the clean template you can use to build your testing projects. For a sample framework with sample tests to guide you, please visit "Sample Framework Repository", or follow the instructions below.
 
 **Features of this framework include:**
