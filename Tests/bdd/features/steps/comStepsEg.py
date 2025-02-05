@@ -1,16 +1,12 @@
+# Patch for collections.Mapping
+import collections
+if not hasattr(collections, 'Mapping'):
+    import collections.abc
+    collections.Mapping = collections.abc.Mapping
+
 from behave import *
 from selenium import webdriver
-
 from selenium.webdriver.common.by import By
-import time
-from datetime import datetime
-from selenium import webdriver
-
-from behave import given, when, then
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-
-import sys
 import logging
 import importlib.util
 import os
@@ -38,44 +34,33 @@ def step_impl(context):
 
 @when('we navigate to "{url}"')
 def step_impl(context, url):
-    driver.get(url)
+    commonUISteps.CommonUISteps.launch_web_browser(driver, url)
 
-@then('we send "{text}" to the alert')
-def step_impl(context, text):
-    time.sleep(5)
-    commonUISteps.CommonUISteps.send_alert_text(context, text)
+@then('the title should be "{title}"')
+def step_impl(context, title):
+    assert title in driver.title, f"Expected title to be '{title}', but got '{driver.title}'"
 
-@then('we print the alert text')
+@when('we go to the "Products" page')
 def step_impl(context):
-    time.sleep(5)
+    element = commonUISteps.CommonUISteps.wait_for_clickability(driver, (By.XPATH, "//*[@id='products']"), timeout=10)
+    commonUISteps.CommonUISteps.click(element)
 
-    # Clean up
-    driver.quit()
+@when('we click the search bar and enter the product name')
+def step_impl(context):
+    commonUISteps.CommonUISteps.click((By.XPATH, "//*[@id='searchproduct']"))
+    commonUISteps.CommonUISteps.send_text((By.XPATH, "//*[@id='searchproduct']"), "AirPods")
 
+@when('we add the product to the basket')
+def step_impl(context):
+    element = commonUISteps.CommonUISteps.wait_for_clickability(driver, (By.XPATH, "//*[@id='root']/div/div/div[2]/div/div/div/div/div/a[2]"), timeout=10)
+    commonUISteps.CommonUISteps.click(element)
 
-# from behave import given, when, then
-# from PIL import Image
-# from features.commonUISteps import CommonUISteps
-# import os
+@when('we go to the basket')
+def step_impl(context):
+    element = commonUISteps.CommonUISteps.wait_for_clickability(driver, (By.XPATH, "//*[@id='navbarNavAltMarkup']/div[2]/a[2]"), timeout=10)
+    commonUISteps.CommonUISteps.click(element)
 
-# @given('the image file "{image_name}" exists')
-# def step_impl(context, image_name):
-#     base_dir = os.getcwd()
-#     relative_path = os.path.join("images")
-#     file_path = os.path.join(base_dir, relative_path, f"{image_name}.png")
-#     assert os.path.exists(file_path), f"Image file {file_path} does not exist"
-
-# @when('we click on the image "{image_name}"')
-# def step_impl(context, image_name):
-#     CommonUISteps.click_on_image(image_name)
-
-# @then('the image "{image_name}" should be clicked successfully')
-# def step_impl(context, image_name):
-#     # This step is more of a placeholder since the action of clicking
-#     # is already handled in the @when step. If there's specific behavior
-#     # to verify after clicking, add that verification here.
-#     pass
-
-
-#     # Clean up
-#     # driver.quit()
+@then('the basket should contain the item')
+def step_impl(context):
+    text = commonUISteps.CommonUISteps.get_elements_text(driver, (By.XPATH, "/html/body/div[1]/div/div/div[2]/h5"))
+    assert text[0] == "AirPods Pro", f"Expected item to be 'AirPods Pro', but got '{text[0]}'"

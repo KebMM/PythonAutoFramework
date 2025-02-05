@@ -35,7 +35,9 @@ class CommonUISteps:
         driver.get(url)
 
     @staticmethod
-    def click(element):
+    def click(driver, locator, timeout=4):
+        wait = WebDriverWait(driver, timeout)
+        element = wait.until(EC.element_to_be_clickable(locator))
         element.click()
 
     @staticmethod
@@ -126,12 +128,12 @@ class CommonUISteps:
         context.driver.execute_script("window.scrollBy(0, -arguments[0]);", pixels)
 
     @staticmethod
-    def scroll_to_bottom(context):
-        context.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    def scroll_to_bottom(driver):
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
     @staticmethod
-    def scroll_to_top(context):
-        context.driver.execute_script("window.scrollTo(0, 0);")
+    def scroll_to_top(driver):
+        driver.execute_script("window.scrollTo(0, 0);")
 
     @staticmethod
     def hover_over_element(context, element):
