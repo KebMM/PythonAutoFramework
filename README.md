@@ -9,7 +9,7 @@ Welcome to the Python Testing Framework! This guide is designed to help you get 
 - [TDD with PyTest](#tdd-with-pytest)
 - [UI Automation](#ui-automation)
 - [API Automation](#api-automation)
-- [Mobile Automation](mobile-automation)
+- [Mobile Automation](#mobile-automation)
 - [Using the Reporting Tool](#using-the-reporting-tool)
 
 ## Overview
