@@ -8,8 +8,7 @@ Pillow==10.3.0
 numpy==2.0.0
 pyautogui==0.9.54
 PyYAML==6.0
-pytest-allure-adaptor==1.7.11
-behave==1.2.7
+behave==1.2.6
 webdriver-manager==4.0.1
 pyscreenshot==3.1
 allure-behave==2.13.5
