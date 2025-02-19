@@ -3,7 +3,7 @@ Feature: Sample test for web UI
   Scenario: Open browser and navigate to demo website
     Given the browser is open
     When we navigate to "https://practise.usemango.co.uk/"
-    Then the title should be "Practise"
+    Then the title should be "Demo Website"
 
   Scenario: Add product to basket
     Given the browser is open

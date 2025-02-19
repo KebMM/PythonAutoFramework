@@ -39,13 +39,15 @@ class TestAppium(unittest.TestCase):
 
     @allure.step('Test clicking and sending text')
     def test_click_and_send_text(self):
-        # Wait for the first element and click
-        self.mobile_steps.wait_for_element(AppiumBy.ID, 'com.cglrstudios.svkttt:id/button7')
-        self.mobile_steps.click_element(AppiumBy.ID, 'com.cglrstudios.svkttt:id/button7')
+        with allure.step("Open app"):
+            # Wait for the first element and click
+            self.mobile_steps.wait_for_element(AppiumBy.ID, 'com.cglrstudios.svkttt:id/button7')
+            self.mobile_steps.click_element(AppiumBy.ID, 'com.cglrstudios.svkttt:id/button7')
 
-        # Wait for the second element and click
-        self.mobile_steps.wait_for_element(AppiumBy.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.support.v4.widget.DrawerLayout/android.view.ViewGroup/android.widget.RelativeLayout/android.webkit.WebView/android.webkit.WebView/android.view.View[1]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.widget.EditText')
-        self.mobile_steps.click_element(AppiumBy.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.support.v4.widget.DrawerLayout/android.view.ViewGroup/android.widget.RelativeLayout/android.webkit.WebView/android.webkit.WebView/android.view.View[1]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.widget.EditText')
+        with allure.step("Click searchbox"):
+            # Wait for the second element and click
+            self.mobile_steps.wait_for_element(AppiumBy.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.support.v4.widget.DrawerLayout/android.view.ViewGroup/android.widget.RelativeLayout/android.webkit.WebView/android.webkit.WebView/android.view.View[1]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.widget.EditText')
+            self.mobile_steps.click_element(AppiumBy.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.support.v4.widget.DrawerLayout/android.view.ViewGroup/android.widget.RelativeLayout/android.webkit.WebView/android.webkit.WebView/android.view.View[1]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.widget.EditText')
 
         # Wait for the input field and send text
         self.mobile_steps.wait_for_element(AppiumBy.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.support.v4.widget.DrawerLayout/android.view.ViewGroup/android.widget.RelativeLayout/android.webkit.WebView/android.webkit.WebView/android.view.View[1]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.widget.EditText')

@@ -15,6 +15,7 @@ import time
 from PIL import Image
 import numpy as np
 import logging
+import json
 
 class SimpleLogHandler(logging.Handler):
     def emit(self, record):
@@ -27,7 +28,22 @@ handler = logging.StreamHandler()
 handler.setFormatter(logging.Formatter('%(message)s'))
 logger.addHandler(handler)
 
+class TestLogger:
+    logs = []
 
+    @staticmethod
+    def log_test_step(step_name, status="PASS"):
+        timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        TestLogger.logs.append({
+            "timestamp": timestamp,
+            "step": step_name,
+            "status": status
+        })
+
+    @staticmethod
+    def save_logs():
+        with open("test_execution_log.json", "w") as f:
+            json.dump(TestLogger.logs, f, indent=4)
 
 class CommonUISteps:
     @staticmethod
