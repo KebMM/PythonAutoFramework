@@ -15,7 +15,7 @@ import time
 from PIL import Image
 import numpy as np
 import logging
-import json
+from reporting.test_logger import component_names
 
 class SimpleLogHandler(logging.Handler):
     def emit(self, record):
@@ -28,78 +28,82 @@ handler = logging.StreamHandler()
 handler.setFormatter(logging.Formatter('%(message)s'))
 logger.addHandler(handler)
 
-class TestLogger:
-    logs = []
-
-    @staticmethod
-    def log_test_step(step_name, status="PASS"):
-        timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        TestLogger.logs.append({
-            "timestamp": timestamp,
-            "step": step_name,
-            "status": status
-        })
-
-    @staticmethod
-    def save_logs():
-        with open("test_execution_log.json", "w") as f:
-            json.dump(TestLogger.logs, f, indent=4)
+def log_component(func):
+    """
+    Log the name of the component whenever it is called.
+    """
+    def wrapper(*args, **kwargs):
+        component_names.append(func.__name__)
+        return func(*args, **kwargs)
+    return wrapper
 
 class CommonUISteps:
     @staticmethod
+    @log_component
     def launch_web_browser(driver, url):
         driver.get(url)
 
     @staticmethod
+    @log_component
     def click(driver, locator, timeout=4):
         wait = WebDriverWait(driver, timeout)
         element = wait.until(EC.element_to_be_clickable(locator))
         element.click()
 
     @staticmethod
+    @log_component
     def click_with_actions(context, element):
         actions = ActionChains(context.driver)
         actions.click(element).perform()
 
     @staticmethod
+    @log_component
     def double_click_with_actions(context, element):
         actions = ActionChains(context.driver)
         actions.double_click(element).perform()
 
     @staticmethod
+    @log_component
     def right_click_with_actions(context, element):
         actions = ActionChains(context.driver)
         actions.context_click(element).perform()
 
     @staticmethod
+    @log_component
     def click_with_timeout(driver, element, timeout):
         wait = WebDriverWait(driver, timeout)
         element = wait.until(EC.visibility_of(element))
         element.click()
 
     @staticmethod
+    @log_component
     def click_and_hold(context, element):
         actions = ActionChains(context.driver)
         actions.click_and_hold(element).perform()
 
     @staticmethod
+    @log_component
     def release_element(context):
         actions = ActionChains(context.driver)
         actions.release().perform()
 
     @staticmethod
+    @log_component
     def click_coordinates(x, y):
         pyautogui.click(x, y)
 
     @staticmethod
+    @log_component
     def send_text(element, text):
         element.send_keys(text)
 
     @staticmethod
+    @log_component
     def move_mouse_to_coordinates(x, y):
         pyautogui.moveTo(x, y)
 
     @staticmethod
+    @log_component
     def get_elements_text(driver, locator):
         elements = driver.find_elements(*locator)
         elem_texts = [el.text for el in elements]
@@ -108,6 +112,7 @@ class CommonUISteps:
         return elem_texts
 
     @staticmethod
+    @log_component
     def verify_element_displayed(context, locator, timeout=10):
         try:
             element = WebDriverWait(context.driver, timeout).until(
@@ -122,6 +127,7 @@ class CommonUISteps:
             assert False, f"Element is not displayed: {locator}"
 
     @staticmethod
+    @log_component
     def verify_element_not_displayed(context, locator, timeout=5):
         try:
             WebDriverWait(context.driver, timeout).until(
@@ -133,6 +139,7 @@ class CommonUISteps:
 
 
     @staticmethod
+    @log_component
     def scroll_to_element(context, element):
         context.driver.execute_script("arguments[0].scrollIntoView(true);", element)
 
@@ -140,28 +147,34 @@ class CommonUISteps:
         context.driver.execute_script("window.scrollBy(0, arguments[0]);", pixels)
 
     @staticmethod
+    @log_component
     def scroll_up_by_pixels(context, pixels):
         context.driver.execute_script("window.scrollBy(0, -arguments[0]);", pixels)
 
     @staticmethod
+    @log_component
     def scroll_to_bottom(driver):
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
     @staticmethod
+    @log_component
     def scroll_to_top(driver):
         driver.execute_script("window.scrollTo(0, 0);")
 
     @staticmethod
+    @log_component
     def hover_over_element(context, element):
         actions = ActionChains(context.driver)
         actions.move_to_element(element).perform()
 
     @staticmethod
+    @log_component
     def set_attribute(context, element, attribute_name, attribute_value):
         script = "arguments[0].setAttribute(arguments[1], arguments[2]);"
         context.driver.execute_script(script, element, attribute_name, attribute_value)
 
     @staticmethod
+    @log_component
     def highlight_element(context, element):
         # Store original style so it can be restored later
         original_style = element.get_attribute("style")
@@ -185,6 +198,7 @@ class CommonUISteps:
         )
 
     @staticmethod
+    @log_component
     def select_checkbox(element, check):
         if check and not element.is_selected():
             element.click()
@@ -194,6 +208,7 @@ class CommonUISteps:
     from selenium.webdriver.support.ui import Select
 
     @staticmethod
+    @log_component
     def select_dropdown_by_text(dropdown_element, text_to_select):
         try:
             # Click the dropdown to open it
@@ -212,6 +227,7 @@ class CommonUISteps:
             print("Error occurred:", e)
 
     @staticmethod
+    @log_component
     def accept_alert(context):
         try:
             alert = context.driver.switch_to.alert
@@ -220,6 +236,7 @@ class CommonUISteps:
             print("No alert present:", e)
 
     @staticmethod
+    @log_component
     def dismiss_alert(context):
         try:
             alert = context.driver.switch_to.alert
@@ -228,6 +245,7 @@ class CommonUISteps:
             print("No alert present:", e)
 
     @staticmethod
+    @log_component
     def get_alert_text(context):
         alert_text = None
         try:
@@ -250,6 +268,7 @@ class CommonUISteps:
             logger.info(f"Error interacting with alert: {e}")
 
     @staticmethod
+    @log_component
     def switch_to_frame(context, name_or_id):
         try:
             context.driver.switch_to.frame(name_or_id)
@@ -257,6 +276,7 @@ class CommonUISteps:
             print("Frame not found:", e)
 
     @staticmethod
+    @log_component
     def switch_to_child_window(context):
         main_window = context.driver.current_window_handle
         all_windows = context.driver.window_handles
@@ -270,11 +290,13 @@ class CommonUISteps:
         raise NoSuchWindowException("No child window found.")
 
     @staticmethod
+    @log_component
     def get_validation_error_message(element):
         message = element.get_attribute("validationMessage")
         return message
 
     @staticmethod
+    @log_component
     def take_screenshot(driver, filename):
         # Convert driver to TakesScreenshot interface
         ts = driver
@@ -301,30 +323,36 @@ class CommonUISteps:
         return pic_bytes
 
     @staticmethod
+    @log_component
     def wait_for(seconds):
         time.sleep(seconds)
 
     @staticmethod
+    @log_component
     def wait_for_visibility(driver, element, time_to_wait_in_sec):
         wait = WebDriverWait(driver, time_to_wait_in_sec)
         return wait.until(EC.visibility_of(element))
 
     @staticmethod
+    @log_component
     def wait_for_visibility_by(driver, locator, timeout):
         wait = WebDriverWait(driver, timeout)
         return wait.until(EC.visibility_of_element_located(locator))
 
     @staticmethod
+    @log_component
     def wait_for_clickability(driver, locator, timeout):
         wait = WebDriverWait(driver, timeout)
         return wait.until(EC.element_to_be_clickable(locator))
 
     @staticmethod
+    @log_component
     def wait_for_presence_of_element(driver, by, time):
         wait = WebDriverWait(driver, time)
         return wait.until(EC.presence_of_element_located(by))
 
     @staticmethod
+    @log_component
     def wait_for_page_to_load(driver, timeout_in_seconds):
         def page_loaded(driver):
             return driver.execute_script("return document.readyState") == "complete"
@@ -332,6 +360,7 @@ class CommonUISteps:
         return wait.until(page_loaded)
 
     @staticmethod
+    @log_component
     def is_element_available(driver, by):
     # Set implicit wait time to 1 second
         driver.implicitly_wait(1)
