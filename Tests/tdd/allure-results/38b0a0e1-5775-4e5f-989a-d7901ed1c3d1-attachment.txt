@@ -1,1 +1,0 @@
-[32mINFO    [0m Text:commonUISteps.py:89 AirPods Pro
